@@ -1,0 +1,65 @@
+﻿@model IEnumerable<CoreProject_Raihan.Models.Auther>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h3 class="text-center text-uppercase">list of authers</h3>
+
+<p>
+    <a asp-action="Create" class="btn btn-primary rounded-0"><i class="fa fa-plus-circle"></i> Create New</a>
+</p>
+<br />
+<form asp-action="Index" method="get">
+    <div class="form-actions no-color">
+        <p>
+            Find by name: <input type="text" name="SearchString" value="@ViewData["CurrentFilter"]" />
+            <input type="submit" value="Search" class="btn btn-default" /> |
+            <a asp-action="Index">Back to Full List</a>
+        </p>
+    </div>
+</form>
+<br />
+
+<table class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>
+                <a asp-action="Index" asp-route-sortOrder="@ViewData["NameSortParm"]">@Html.DisplayNameFor(model => model.AutherName)</a>
+            </th>
+            @*<th>@Html.DisplayNameFor(model => model.AutherName)</th>*@
+            <th>@Html.DisplayNameFor(model => model.Qualification)</th>
+            <th>@Html.DisplayNameFor(model => model.Experience)</th>
+            <th>
+                <a asp-action="Index" asp-route-sortOrder="@ViewData["DateSortParm"]">@Html.DisplayNameFor(model => model.WrittenDate)</a>
+            </th>
+            @*<th>@Html.DisplayNameFor(model => model.WrittenDate)</th>*@
+            <th>@Html.DisplayNameFor(model => model.PublishDate)</th>
+            <th>@Html.DisplayNameFor(model => model.Venue)</th>
+            <th>@Html.DisplayNameFor(model => model.ProfilePicture)</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+        <tr>
+
+            <td>@item.AutherName</td>
+            <td>@item.Qualification</td>
+            <td>@item.Experience</td>
+            <td>@item.WrittenDate.ToString("dd-MM-yyyy")</td>
+            <td>@item.PublishDate.ToString("dd-MM-yyyy")</td>
+            <td>@item.Venue</td>
+            <td>
+                <a asp-action="Details" asp-route-id="@item.Id">
+                    <img src="~/Uploads/@item.ProfilePicture" class="img-thumbnail" height="100" width="100" asp-append-version="true" />
+                </a>
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-sm btn-info rounded-0"><i class="fa fa-pencil-alt"></i>Edit</a>
+                <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-sm btn-danger rounded-0"><i class="fa fa-trash-alt"></i>Delete</a>
+            </td>
+        </tr>}
+    </tbody>
+</table>
